@@ -70,7 +70,7 @@ describe('user data layer', () => {
             .rejects.toThrow('user validation failed: fullName: Path `fullName` is required.')
     })
 
-    it.skip('should not require a company name', async () => {
+    it('should not require a company name', async () => {
         // setup
         const createdUser = await createUser('tonye', 'Tony Enerson')
 
@@ -81,18 +81,12 @@ describe('user data layer', () => {
         expect(user.companyName).toEqual('')  // default value
     })
 
-    it.skip('should not create a user with a duplicate username', async () => {
+    it('should not create a user with a duplicate username', async () => {
         //setup
         await createUser('tonye', 'Tony Enerson', 'InceptionU')
 
-        //execute
-        try {
-            await createUser('tonye', 'Tony Eggbert', 'Cupcakes4Fun')
-            fail('should have failed to create a duplicate username')
-        }
-        catch (err) {
-            // happy case!
-        }
+        await expect(createUser('tonye', 'Tony Eggbert', 'Cupcakes4Fun'))
+            .rejects.toThrow('User name already exists')
     })
 
 })
