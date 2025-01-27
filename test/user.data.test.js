@@ -8,19 +8,19 @@ describe('user data layer', () => {
         //execute
         const user = await createUser('tonye', 'Tony Enerson', 'InceptionU')
 
-        // test
+        // assert/verify
         expect(user).toBeDefined()
         expect(user.username).toEqual('tonye')
         expect(user.fullName).toEqual('Tony Enerson')
         expect(user.companyName).toEqual('InceptionU')
     })
 
-    it.skip('should find a user by username', async () => {
+    it('should find a user by username', async () => {
         // setup
         await createUser('tonye', 'Tony Enerson', 'InceptionU')
 
         // execute
-        const user = findUserByUsername('tonye')
+        const user = await findUserByUsername('tonye')
 
         // test
         expect(user.username).toEqual('tonye')
@@ -28,12 +28,12 @@ describe('user data layer', () => {
         expect(user.companyName).toEqual('InceptionU')
     })
 
-    it.skip('should find a user by id', async () => {
+    it('should find a user by id', async () => {
         // setup
         const createdUser = await createUser('tonye', 'Tony Enerson', 'InceptionU')
 
         // execute
-        const user = findUserById(createdUser._id)
+        const user = await findUserById(createdUser._id)
 
         // test
         expect(user.username).toEqual('tonye')
@@ -68,7 +68,7 @@ describe('user data layer', () => {
         const createdUser = await createUser('tonye', 'Tony Enerson')
 
         // execute
-        const user = findUserById(createdUser._id)
+        const user = await findUserById(createdUser._id)
 
         // test
         expect(user.companyName).toEqual('')  // default value
