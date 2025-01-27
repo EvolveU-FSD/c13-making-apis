@@ -41,26 +41,33 @@ describe('user data layer', () => {
         expect(user.companyName).toEqual('InceptionU')
     })
 
-    it.skip('should require a username', async () => {
-        //execute
-        try {
-            await createUser('', 'Tony Enerson', 'InceptionU')
-            fail('should have failed to create a duplicate username')
-        }
-        catch (err) {
-            // happy case!
-        }
+    it('should not create a user with a number for a username', async () => {
+        const user = await createUser(12, 'Tony Enerson', 'InceptionU')
+        expect(user.username).toEqual('12')
     })
 
-    it.skip('should require a full name', async () => {
-        //execute
-        try {
-            await createUser('tonye', '', 'InceptionU')
-            fail('should have failed to create a duplicate username')
-        }
-        catch (err) {
-            // happy case!
-        }
+    it('should require a username', async () => {
+        // execute/verify
+        await expect(createUser(null, 'Tony Enerson', 'InceptionU'))
+            .rejects.toThrow('user validation failed: username: Path `username` is required.')
+    })
+
+    it('should require a full name', async () => {
+        //execute/verify
+        await expect(createUser('tonye', null, 'InceptionU'))
+            .rejects.toThrow('user validation failed: fullName: Path `fullName` is required.')
+    })
+
+    it('should require a username that is not an empty string', async () => {
+        // execute/verify
+        await expect(createUser('', 'Tony Enerson', 'InceptionU'))
+            .rejects.toThrow('user validation failed: username: Path `username` is required.')
+    })
+
+    it('should require a full name that is not an empty string', async () => {
+        //execute/verify
+        await expect(createUser('tonye', '', 'InceptionU'))
+            .rejects.toThrow('user validation failed: fullName: Path `fullName` is required.')
     })
 
     it.skip('should not require a company name', async () => {

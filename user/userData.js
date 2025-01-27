@@ -3,8 +3,8 @@ import { connect } from '../db.js'
 const mongoose = await connect()
 
 const userSchema = mongoose.Schema({
-    username: String,
-    fullName: String,
+    username: { type: String, required: true },
+    fullName: { type: String, required: true },
     companyName: String
 })
 const User = mongoose.model('user', userSchema, 'users')
