@@ -5,12 +5,14 @@ if (!(dbUri.includes('test') || dbUri.includes('Test'))) {
 }
 
 export * from '../db.js'
-
 import { disconnectDb } from '../db.js'
+
 import { deleteAllUsers } from '../user/userData.js';
+import { deleteAllChats } from '../chat/chatData.js';
 
 export async function cleanoutDatabase() {
     await deleteAllUsers();
+    await deleteAllChats();
 }
 
 beforeEach(async () => {
@@ -18,5 +20,6 @@ beforeEach(async () => {
 })
 
 afterAll(async () => {
+    console.log('Disconnecting mongoose')
     await disconnectDb()
 })

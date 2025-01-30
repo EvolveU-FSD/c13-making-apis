@@ -23,6 +23,15 @@ export async function findUserByUsername(username) {
     return await User.findOne({ username })
 }
 
+export async function updateUser(user) {
+}
+
+export async function setUserPassword(username, password) {
+}
+
+export async function findUserVerifyPassword(username, password) {
+}
+
 export async function deleteAllUsers() {
     return await User.deleteMany()
 }
