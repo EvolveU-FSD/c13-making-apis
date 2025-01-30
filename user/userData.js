@@ -11,7 +11,7 @@ const User = mongoose.model('user', userSchema, 'users')
 
 export async function createUser(username, fullName, companyName) {
     const existingUser = await findUserByUsername(username)
-    if (existingUser) new Error('User name already exists')
+    if (existingUser) throw new Error('User name already exists')
     return await User.create({ username, fullName, companyName })
 }
 
