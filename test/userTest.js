@@ -97,7 +97,7 @@ describe('user data layer', () => {
             .rejects.toThrow('User name already exists')
     })
 
-    it.skip('should update a user', async () => {
+    it('should update a user', async () => {
         //setup
         const createdUser = await createUser('tonye', 'Tony Enerson', 'InceptionU')
 
