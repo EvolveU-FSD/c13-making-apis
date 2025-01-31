@@ -100,13 +100,19 @@ describe('user data layer', () => {
     it.skip('should update a user', async () => {
         //setup
         const createdUser = await createUser('tonye', 'Tony Enerson', 'InceptionU')
-        const update = { ...createdUser, companyName: 'Cupcakes4Fun' }
+        console.log(createdUser)
 
         // execute 
-        await updateUser(update)
+        await updateUser({
+            _id: createUser._id,
+            username: 'tonye',
+            fullName: 'Tony Eggbert', 
+            companyName: 'Cupcakes4Fun'
+        })
 
         // assert
         const actual = await findUserById(createdUser._id)
+        expect(actual.fullName).toEqual('Tony Eggbert')
         expect(actual.companyName).toEqual('Cupcakes4Fun')
     })
 

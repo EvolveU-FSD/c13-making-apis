@@ -6,8 +6,6 @@ let connectionPromise = null
 
 export async function connect() {
     if (!connectionPromise) {
-        console.log('Connecting mongoose')
-        console.trace()
         connectionPromise = mongoose.connect(mongo_uri);
     }
     return await connectionPromise

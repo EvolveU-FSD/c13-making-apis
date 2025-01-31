@@ -20,6 +20,5 @@ beforeEach(async () => {
 })
 
 afterAll(async () => {
-    console.log('Disconnecting mongoose')
     await disconnectDb()
 })
