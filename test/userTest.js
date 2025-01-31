@@ -147,7 +147,7 @@ describe('user data layer', () => {
         .rejects.toThrow("Cannot change username")
     })
 
-    it.skip('should set and verify a password (and not expose the password)', async () => {
+    it('should set and verify a password (and not expose the password)', async () => {
         //setup
         const createdUser = await createUser('tonye', 'Tony Enerson', 'InceptionU')
 
@@ -161,7 +161,7 @@ describe('user data layer', () => {
         expect(actual.pwHash).toBeUndefined()      
     })
 
-    it.skip('should not verify a user without a password', async () => {
+    it('should not verify a user without a password', async () => {
         //setup
         const createdUser = await createUser('tonye', 'Tony Enerson', 'InceptionU')
 
@@ -172,7 +172,7 @@ describe('user data layer', () => {
         expect(actual).toBeUndefined()
     })
 
-    it.skip('should not verify a user with a bad pasword', async () => {
+    it('should not verify a user with a bad pasword', async () => {
         //setup
         const createdUser = await createUser('tonye', 'Tony Enerson', 'InceptionU')
         await setUserPassword(createdUser.username, "12345") // same my luggage!

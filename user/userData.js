@@ -1,12 +1,15 @@
 import { connect } from '../db.js'
+import bcryptjs from 'bcryptjs'
 
 const mongoose = await connect()
 
 const userSchema = mongoose.Schema({
     username: { type: String, required: true, unique: true },
     fullName: { type: String, required: true },
-    companyName: { type: String, default: ''} 
+    companyName: { type: String, default: ''},
+    pwHash: { type: String, select: false } 
 })
+
 const User = mongoose.model('user', userSchema, 'users')
 
 export async function createUser(username, fullName, companyName) {
@@ -34,9 +37,16 @@ export async function updateUser(userUpdate) {
 }
 
 export async function setUserPassword(username, password) {
+    const user = await User.findOne({ username })
+    user.pwHash = bcryptjs.hashSync(password)
+    await user.save()
 }
 
 export async function findUserVerifyPassword(username, password) {
+    const user = await User.findOne({ username }).select('+pwHash')
+    if(user.pwHash && bcryptjs.compareSync(password, user.pwHash)) {
+        return await findUserByUsername(username)
+    }
 }
 
 export async function deleteAllUsers() {
