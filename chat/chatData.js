@@ -27,11 +27,6 @@ export async function deleteAllChats() {
 export async function inviteUserToChat(chat, user) {
 }
 
-// find all chats that this user owns or is an invitee to
-export async function findChatsForUser(userId) {
-    return []
-}
-
 // find all invites this user has not accepted
 export async function findChatInvitesForUser(user) {
     return []
@@ -39,6 +34,11 @@ export async function findChatInvitesForUser(user) {
 
 // when a user accepts an invite
 export async function acceptInvite(user, chat) {
+}
+
+// find all chats that this user owns or is an invitee to
+export async function findChatsForUser(userId) {
+    return []
 }
 
 // add a new message to a chat

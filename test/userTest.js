@@ -100,11 +100,10 @@ describe('user data layer', () => {
     it.skip('should update a user', async () => {
         //setup
         const createdUser = await createUser('tonye', 'Tony Enerson', 'InceptionU')
-        console.log(createdUser)
 
         // execute 
         await updateUser({
-            _id: createUser._id,
+            _id: createdUser._id,
             username: 'tonye',
             fullName: 'Tony Eggbert', 
             companyName: 'Cupcakes4Fun'
@@ -116,14 +115,33 @@ describe('user data layer', () => {
         expect(actual.companyName).toEqual('Cupcakes4Fun')
     })
 
+    it.skip('should not update a fullName to an empty value', async () => {
+        //setup
+        const createdUser = await createUser('tonye', 'Tony Enerson', 'InceptionU')
+
+        // execute / verify
+        await expect(updateUser({
+            _id: createdUser._id,
+            username: 'tonye',
+            fullName: '', 
+            companyName: 'Cupcakes4Fun'
+        }))
+        .rejects.toThrow('user validation failed: fullName: Path `fullName` is required.')
+    })
+
+
     it.skip('should not update a username', async () => {
         //setup
         const createdUser = await createUser('tonye', 'Tony Enerson', 'InceptionU')
-        const update = { ...createdUser, username: 'tonye2' }
 
         // execute / verify
-        await expect(updateUser(update))
-            .rejects.toThrow("Cannot change username")
+        await expect(updateUser({
+            _id: createdUser._id,
+            username: 'tonye2',
+            fullName: 'Tony Enerson', 
+            companyName: 'InceptionU'
+        }))
+        .rejects.toThrow("Cannot change username")
     })
 
     it.skip('should set and verify a password (and not expose the password)', async () => {

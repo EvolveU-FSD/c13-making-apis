@@ -34,19 +34,6 @@ describe.skip('chat data layer', () => {
         expect(chat.ownerId).toEqual(chatOwner._id)        
     })
 
-    it('findChatsForUser should find chats that belongs to an owner', async () => {
-        //setup
-        await createChat(chatOwner, "Some Topic")
-
-        // execute
-        const chats = await findChatsForUser(chatOwner)
-
-        // verify
-        expect(chats.length).toEqual(1)
-        expect(chats[0].topic).toEqual("Some Topic")        
-
-    })
-
     it('should find chat invitations', async () => {
         //setup
         const createdChat = await createChat(chatOwner, "Some Topic")
@@ -57,7 +44,9 @@ describe.skip('chat data layer', () => {
 
         // verify
         expect(invitedChats.length).toEqual(1)
-        expect(invitedChats[0].topic).toEqual("Some Topic")        
+        expect(invitedChats[0].topic).toEqual("Some Topic")     
+        
+        // verify chat membership (or lack thereof) here
     })
 
     it('should accept an invitation', async () => {
@@ -72,9 +61,24 @@ describe.skip('chat data layer', () => {
         // assert 
         const afterAccept = await findChatInvitesForUser(chatMember)
         expect(afterAccept.length).toEqual(0)
+
+        // verify chat membership here!
     })
 
-    it('findChatsForUser should find chats that a user has been invited to', async () => {
+    it('findChatsForUser should find chats that belongs to an owner', async () => {
+        //setup
+        await createChat(chatOwner, "Some Topic")
+
+        // execute
+        const chats = await findChatsForUser(chatOwner)
+
+        // verify
+        expect(chats.length).toEqual(1)
+        expect(chats[0].topic).toEqual("Some Topic")        
+
+    })
+
+    it('findChatsForUser should find chats that a user has accepted invitations to', async () => {
         //setup
         const createdChat = await createChat(chatOwner, "Some Topic")
         await inviteUserToChat(createdChat, chatMember)
@@ -88,9 +92,9 @@ describe.skip('chat data layer', () => {
         expect(chats[0].topic).toEqual("Some Topic")        
     })
 
-    it('findChatsForUser should both chats that a user has been invited to and ones they have created', async () => {
+    it('findChatsForUser should find both chats that a user has accepted invitations to and ones they have created', async () => {
         //setup
-        const createdChat = await createChat(chatOwner, "Some Topic")
+        await createChat(chatOwner, "Some Topic")
 
         const invitedChat = await createChat(chatMember, "Some Other Topic")
         await inviteUserToChat(invitedChat, chatOwner)
@@ -103,4 +107,5 @@ describe.skip('chat data layer', () => {
         expect(chats.length).toEqual(2)
     })
 
+    
 })
