@@ -24,6 +24,13 @@ export async function findUserByUsername(username) {
 }
 
 export async function updateUser(userUpdate) {
+    const user = await findUserById(userUpdate._id)
+    if (userUpdate.username !== user.username) {
+        throw new Error("Cannot change username ")
+    }
+    user.fullName=userUpdate.fullName
+    user.companyName= userUpdate.companyName
+    return await user.save()
 }
 
 export async function setUserPassword(username, password) {

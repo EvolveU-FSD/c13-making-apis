@@ -102,7 +102,7 @@ describe('user data layer', () => {
         const createdUser = await createUser('tonye', 'Tony Enerson', 'InceptionU')
 
         // execute 
-        await updateUser({
+        const updatedUser = await updateUser({
             _id: createdUser._id,
             username: 'tonye',
             fullName: 'Tony Eggbert', 
@@ -110,12 +110,15 @@ describe('user data layer', () => {
         })
 
         // assert
-        const actual = await findUserById(createdUser._id)
-        expect(actual.fullName).toEqual('Tony Eggbert')
-        expect(actual.companyName).toEqual('Cupcakes4Fun')
+        expect(updatedUser.fullName).toEqual('Tony Eggbert')
+        expect(updatedUser.companyName).toEqual('Cupcakes4Fun')
+
+        const reReadUser = await findUserById(createdUser._id)
+        expect(reReadUser.fullName).toEqual('Tony Eggbert')
+        expect(reReadUser.companyName).toEqual('Cupcakes4Fun')
     })
 
-    it.skip('should not update a fullName to an empty value', async () => {
+    it('should not update a fullName to an empty value', async () => {
         //setup
         const createdUser = await createUser('tonye', 'Tony Enerson', 'InceptionU')
 
@@ -130,7 +133,7 @@ describe('user data layer', () => {
     })
 
 
-    it.skip('should not update a username', async () => {
+    it('should not update a username', async () => {
         //setup
         const createdUser = await createUser('tonye', 'Tony Enerson', 'InceptionU')
 
