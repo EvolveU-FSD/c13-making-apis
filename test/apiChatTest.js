@@ -1,6 +1,6 @@
 import { createChat, inviteUserToChat } from '../chat/chatData.js'
 import { createUser } from '../user/userData.js'
-import { startServer, shutdownServer, doGet, doPost, createUserAndLogin, createCredentialHeaders } from './testServer.js'
+import { startServer, shutdownServer, doGet, doPost, doPut, createUserAndLogin, createCredentialHeaders } from './testServer.js'
 
 describe('/api/chat', () => {
 
@@ -13,7 +13,7 @@ describe('/api/chat', () => {
         await shutdownServer(baseUrl)
     })
 
-    it.skip('should create a chat with a POST to /api/chat', async () => {
+    it('should create a chat with a POST to /api/chat', async () => {
         const owner = await createUserAndLogin()
         const expectedChat = {
             topic: "Creating APIs for Fun and Profit!", 
@@ -24,12 +24,12 @@ describe('/api/chat', () => {
 
         // verify
         expect(actual.topic).toEqual(expectedChat.topic)
-        expect(actual.ownerId).toEqual(owner._id)
+        expect(actual.ownerId).toEqual(owner._id.toString())
         expect(actual.members).toEqual([])
         expect(actual.messages).toEqual([])
     })
 
-    it.skip('should find a chat', async () => {
+    it('should find a chat', async () => {
         // setup
         const owner = await createUserAndLogin()
         const expectedChat = await createChat(owner, "Using IDs in urls")
@@ -40,6 +40,7 @@ describe('/api/chat', () => {
         // verify
         expect(actual).toBeDefined()
         expect(actual.topic).toEqual("Using IDs in urls")
+        expect(actual._id).toEqual(expectedChat._id.toString())
     })
 
     it.skip('should not find a chat if you arent a member', async () => {
@@ -58,7 +59,7 @@ describe('/api/chat', () => {
         expect(response.status).toEqual(403)
     })
 
-    it.skip('should list chats you own with /api/chat', async () => {
+    it('should list chats you own with /api/chat', async () => {
         // setup
         const owner = await createUserAndLogin()
         const expectedChat = await createChat(owner, "Getting multiple records with /")
@@ -72,7 +73,7 @@ describe('/api/chat', () => {
         expect(actual[0].topic).toEqual(expectedChat.topic)
     })
 
-    it.skip('should update a chat with a PUT to /api/chat/:id', async () => {
+    it('should update a chat with a PUT to /api/chat/:id', async () => {
         // setup
         const owner = await createUserAndLogin()
         const expectedChat = await createChat(owner, "Updating records with PUT")

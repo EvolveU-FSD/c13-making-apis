@@ -34,7 +34,11 @@ export async function findChatById(id) {
 }
 
 // updating a chat really means changing the topic
-export async function updateChat(chat) {}
+export async function updateChat(chat) {
+  const chatToUpdate = await findChatById(chat._id)
+  chatToUpdate.topic = chat.topic
+  return await chatToUpdate.save()
+}
 
 export async function deleteAllChats() {
   await Chat.deleteMany();
