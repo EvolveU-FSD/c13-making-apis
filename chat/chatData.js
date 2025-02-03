@@ -6,6 +6,11 @@ const chatSchema = mongoose.Schema({
   topic: { type: String, required: true },
   ownerId: { type: mongoose.Schema.Types.ObjectId, ref: "user" },
   members: [{ type: mongoose.Schema.Types.ObjectId, ref: "user" }],
+  messages: [ {
+    date: { type: Date, required: true, default: Date.now },
+    message: { type: String, required: true },
+    authorId: { type: mongoose.Schema.Types.ObjectId, ref: "user" }
+  }]
 });
 
 const Chat = mongoose.model("chat", chatSchema, "chats");
@@ -65,9 +70,15 @@ export async function acceptInvite(user, chat) {
 }
 
 // find all chats that this user owns or is an invitee to
-export async function findChatsForUser(userId) {
-  return [];
+export async function findChatsForUser(user) {
+  const myChats = await Chat.find({ ownerId: user._id })
+  const memberChats = await Chat.find({ members: user._id })
+  return [ ...myChats, ...memberChats ]
 }
 
 // add a new message to a chat
-export async function addMessageToChat(chat, user, message) {}
+export async function addMessageToChat(chat, user, message) {
+  const theChat = await findChatById(chat._id)
+  theChat.messages.push({ message, authorId: user._id})
+  return await theChat.save()
+}

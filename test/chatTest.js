@@ -74,7 +74,7 @@ describe("chat data layer", () => {
     expect(chat.members[0]).toEqual(chatMember._id);
   });
 
-  it.skip("findChatsForUser should find chats that belongs to an owner", async () => {
+  it("findChatsForUser should find chats that belongs to an owner", async () => {
     //setup
     await createChat(chatOwner, "Some Topic");
 
@@ -86,7 +86,7 @@ describe("chat data layer", () => {
     expect(chats[0].topic).toEqual("Some Topic");
   });
 
-  it.skip("findChatsForUser should find chats that a user has accepted invitations to", async () => {
+  it("findChatsForUser should find chats that a user has accepted invitations to", async () => {
     //setup
     const createdChat = await createChat(chatOwner, "Some Topic");
     await inviteUserToChat(createdChat, chatMember);
@@ -100,7 +100,7 @@ describe("chat data layer", () => {
     expect(chats[0].topic).toEqual("Some Topic");
   });
 
-  it.skip("findChatsForUser should find both chats that a user has accepted invitations to and ones they have created", async () => {
+  it("findChatsForUser should find both chats that a user has accepted invitations to and ones they have created", async () => {
     //setup
     await createChat(chatOwner, "Some Topic");
 
@@ -114,4 +114,5 @@ describe("chat data layer", () => {
     // verify
     expect(chats.length).toEqual(2);
   });
+  
 });
