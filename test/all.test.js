@@ -1,3 +1,5 @@
 import './testDb.js'
 import './userTest.js'
 import './chatTest.js'
+import './apiUserAuthTest.js'
+import './apiChatTest.js'
