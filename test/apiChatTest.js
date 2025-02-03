@@ -72,6 +72,21 @@ describe('/api/chat', () => {
         expect(actual[0].topic).toEqual(expectedChat.topic)
     })
 
+    it.skip('should update a chat with a PUT to /api/chat/:id', async () => {
+        // setup
+        const owner = await createUserAndLogin()
+        const expectedChat = await createChat(owner, "Updating records with PUT")
+
+        // execute
+        const actual = await doPut(baseUrl+"/api/chat/"+expectedChat.id, {
+            topic: "New topic"
+        })
+
+        // verify
+        expect(actual).toBeDefined()
+        expect(actual.topic).toEqual("New topic")
+    })
+
     it.skip('should create an invite with a post to /api/chat/:id/invite', async () => {
         // setup
         const owner = await createUserAndLogin()

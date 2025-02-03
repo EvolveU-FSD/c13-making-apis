@@ -80,6 +80,21 @@ export async function doPost(url, body) {
     return await response.json()
 }
 
+export async function doPut(url, body) {
+    const headers = {
+        'Content-Type': 'application/json'
+    }
+    if (credential) headers['Authorization']=credential
+
+    const response = await fetch(url, {
+        method: 'put',
+        headers,
+        body: JSON.stringify(body)
+    })
+    expect(response.ok).toEqual(true) // HTTP request failed!
+    return await response.json()
+}
+
 afterAll(async () => {
     const baseUrls = Object.keys(runningServers)
     await Promise.allSettled(baseUrls.map(shutdownServer))

@@ -9,6 +9,11 @@ router.get('/invites', requireBasicAuth, async function (req, res) {
     res.sendStatus(400)
 })
 
+// create an invite
+router.post('/:chatId/accept', requireBasicAuth, async function (req, res) {
+    // send response
+    res.sendStatus(400)
+})
 
 // add a message
 router.post('/:chatId/message', requireBasicAuth, async function (req, res) {
@@ -29,7 +34,7 @@ router.get('/:chatId', requireBasicAuth, async function (req, res) {
 })
 
 // update a chat 
-router.put('/:chatId/', requireBasicAuth, async function (req, res) {
+router.put('/:chatId', requireBasicAuth, async function (req, res) {
     // send response
     res.sendStatus(400)
 })
